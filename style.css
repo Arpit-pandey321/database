@@ -1,0 +1,1216 @@
+/* ========== CSS VARIABLES ========== */
+:root {
+    --bg-color: #ffebf0;
+    /* Soft pastel pink base */
+    --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffc0cb 100%);
+    /* Elegant pink gradient */
+    --text-dark: #8e1f3c;
+    /* Elegant deep pink/red for headers */
+    --text-light: #522432;
+    /* Rich dark rosewood text for readable contrast against pink backgrounds */
+    --primary-pink: #ff4778;
+    --secondary-pink: #ff8fa3;
+    --accent-gold: #ffd700;
+
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-shadow: 0 10px 30px 0 rgba(255, 182, 193, 0.4);
+
+    --font-p: 'Poppins', sans-serif;
+    --font-h: 'Playfair Display', serif;
+    --font-script: 'Dancing Script', cursive;
+}
+
+/* ========== RESET & BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+    background: var(--bg-gradient);
+    font-family: var(--font-p);
+    color: var(--text-light);
+    scroll-behavior: smooth;
+}
+
+body {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1,
+h2,
+h3 {
+    font-family: var(--font-h);
+}
+
+p {
+    line-height: 1.6;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg,
+            #ffb6c1,
+            /* soft pink */
+            #ff4778,
+            /* vivid pink */
+            #9b005d,
+            /* deep magenta */
+            #4b0022,
+            /* dark burgundy */
+            #2a0014
+            /* almost black for drama */
+        );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0px 4px 15px rgba(255, 107, 138, 0.4);
+}
+
+.section-sub {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    padding: 0 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========== COMMON COMPONENTS ========== */
+.section {
+    min-height: 100vh;
+    width: 100%;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ========== LOADING SCREEN ========== */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff0f5;
+    /* Light pastel background */
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease;
+}
+
+.loader-heart {
+    font-size: 4rem;
+    animation: pulseHeart 1s infinite alternate;
+    margin-bottom: 20px;
+}
+
+.loader-text {
+    font-family: var(--font-script);
+    font-size: 2rem;
+    color: var(--primary-pink);
+}
+
+.loader-bar {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 107, 138, 0.2);
+    border-radius: 3px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.loader-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff8fa3, #ff4778);
+    transition: width 0.2s ease;
+    box-shadow: 0 0 10px #ff4778;
+}
+
+/* ========== FIXED UI ========== */
+.fixed-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 107, 138, 0.5);
+    box-shadow: 0 0 15px rgba(255, 71, 120, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    transition: transform 0.3s;
+}
+
+.fixed-btn:active {
+    transform: scale(0.9);
+}
+
+
+
+#sparkle-canvas,
+#hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0;
+    animation: floatUp 4s forwards linear;
+    filter: drop-shadow(0 0 5px rgba(255, 71, 120, 0.5));
+}
+
+/* ========== SECTION 1: HERO ========== */
+#confetti-canvas,
+.balloons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 10;
+    padding: 40px 30px;
+    background: var(--glass-bg);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
+    width: 90%;
+    max-width: 400px;
+}
+
+.hero-greeting {
+    font-family: var(--font-script);
+    font-size: 2rem;
+    color: var(--secondary-pink);
+    margin-bottom: 10px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    text-shadow: 0 3px 10px rgba(255, 182, 193, 0.8);
+}
+
+.hero-heart {
+    font-size: 3.5rem;
+    margin: 15px 0;
+    animation: heartbeat 1.5s infinite;
+    filter: drop-shadow(0 0 15px rgba(255, 71, 120, 0.6));
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 25px;
+    color: var(--text-light);
+    /* Matched to dark pink theme */
+}
+
+.scroll-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-top: 20px;
+}
+
+.scroll-arrow {
+    margin-top: 5px;
+    font-size: 1.2rem;
+    animation: bounce 2s infinite;
+    color: var(--primary-pink);
+}
+
+/* ========== SECTION 2: ENVELOPE REDESIGN ========== */
+.envelope-scene {
+    perspective: 1200px;
+    width: 320px;
+    height: 220px;
+    margin: 20px auto 40px auto;
+    position: relative;
+    z-index: 10;
+}
+
+.envelope {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.envelope.is-open {
+    transform: translateY(60px) scale(0.95);
+    cursor: default;
+}
+
+/* Sub-components of realistic envelope */
+.env-body-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #d2a679, #bf8c5c);
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.env-letter {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    background: #fff;
+    background-image:
+        radial-gradient(circle at top right, #ffe6f0 0%, transparent 40%),
+        radial-gradient(circle at bottom left, #fff0f5 0%, transparent 40%);
+    border: 3px solid #ffccdd;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(255, 107, 138, 0.2);
+    z-index: 2;
+    transition: transform 1s 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.envelope.is-open .env-letter {
+    transform: translateY(-180px);
+    z-index: 6;
+}
+
+.letter-inner {
+    height: 100%;
+    width: 100%;
+    padding: 25px 20px;
+    overflow-y: auto;
+    color: #5a2a35;
+}
+
+.letter-inner::-webkit-scrollbar {
+    width: 4px;
+}
+
+.letter-inner::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+}
+
+.letter-inner h3 {
+    font-family: var(--font-script);
+    color: #8e1f3c;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.letter-inner p {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    line-height: 1.6;
+    font-family: 'Georgia', serif;
+}
+
+.letter-sign {
+    font-family: var(--font-script);
+    font-size: 1.6rem;
+    color: #8e1f3c;
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Front folds */
+.env-body-left,
+.env-body-right,
+.env-body-bottom {
+    position: absolute;
+    z-index: 3;
+}
+
+.env-body-left {
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-top: 110px solid transparent;
+    border-bottom: 110px solid transparent;
+    border-left: 160px solid #deba96;
+}
+
+.env-body-right {
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 100%;
+    border-top: 110px solid transparent;
+    border-bottom: 110px solid transparent;
+    border-right: 160px solid #dcb58f;
+}
+
+.env-body-bottom {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-bottom: 130px solid #e2c1a0;
+}
+
+/* Flap */
+.env-flap-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 140px solid #e8c8a8;
+    transform-origin: top;
+    z-index: 5;
+    transition: transform 0.6s 0.1s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.6s;
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+}
+
+.envelope.is-open .env-flap-front {
+    transform: rotateX(180deg);
+    z-index: 1;
+    filter: none;
+}
+
+/* Wax Seal */
+.wax-seal {
+    position: absolute;
+    top: 125px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 30% 30%, #b22222, #8b0000 70%, #5c0000);
+    border-radius: 50%;
+    z-index: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5), 0 5px 10px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s;
+}
+
+.wax-heart {
+    font-size: 1.2rem;
+    color: #ffcccc;
+    opacity: 0.8;
+}
+
+.envelope.is-open .wax-seal {
+    opacity: 0;
+}
+
+/* Envelope Buttons */
+.env-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+    z-index: 15;
+    position: relative;
+}
+
+.env-btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(135deg, #ff6b8a, #ff4778);
+    color: white;
+    font-family: var(--font-p);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 71, 120, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.env-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255, 71, 120, 0.4);
+}
+
+/* ========== SECTION 3: REASONS ========== */
+.reasons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px 0;
+}
+
+.reason-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: var(--glass-shadow);
+    transform: translateX(-50px);
+    opacity: 0;
+    backdrop-filter: blur(10px);
+}
+
+.reason-num {
+    font-family: var(--font-h);
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    /* kept white to pop on the gradient circle */
+    background: linear-gradient(135deg, var(--secondary-pink), var(--primary-pink));
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(255, 71, 120, 0.5);
+}
+
+.reason-card p {
+    font-size: 1.05rem;
+    color: var(--text-light);
+    font-weight: 500;
+    text-shadow: none;
+}
+
+/* ========== SECTION 4: GALLERY (POLAROIDS) ========== */
+.timeline {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    padding: 40px 0;
+}
+
+.hanging-line {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    border-left: 1px dashed rgba(255, 255, 255, 0.4);
+}
+
+.polaroid-wrapper {
+    width: 85%;
+    margin-bottom: 60px;
+    position: relative;
+    perspective: 1000px;
+}
+
+.polaroid-wrapper:nth-child(even) {
+    margin-left: auto;
+}
+
+/* align right */
+
+.tape {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 80px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.tape.right-tape {
+    transform: translateX(-50%) rotate(4deg);
+}
+
+.polaroid {
+    background: #fff;
+    padding: 12px 12px 30px 12px;
+    border-radius: 2px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+    cursor: pointer;
+    position: relative;
+}
+
+.polaroid.left {
+    transform: rotate(-4deg);
+}
+
+.polaroid.right {
+    transform: rotate(5deg);
+}
+
+.polaroid:hover,
+.polaroid:active {
+    transform: scale(1.05) rotate(0);
+    box-shadow: 0 25px 50px rgba(255, 71, 120, 0.3);
+    z-index: 5;
+}
+
+.pol-img {
+    width: 100%;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.ph-text {
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.pol-caption {
+    font-family: var(--font-script);
+    font-size: 1.6rem;
+    text-align: center;
+    margin-top: 15px;
+    color: #333;
+}
+
+/* ========== SECTION 5: GROWING FLOWER ========== */
+.flower-stage {
+    width: 100%;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.flower-svg {
+    width: 100%;
+    height: 100%;
+    max-width: 320px;
+    z-index: 1;
+    overflow: visible;
+    filter: drop-shadow(0 15px 25px rgba(255, 107, 138, 0.4));
+}
+
+#flower-stem {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    transition: stroke-dashoffset 2s ease-in-out;
+}
+
+#grass-base {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s, transform 1s ease-out;
+}
+
+#leaf-left {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 100px 320px;
+    transition: opacity 1s, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#leaf-right {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 100px 270px;
+    transition: opacity 1s, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#leaf-left-2 {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 100px 240px;
+    transition: opacity 1s, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#leaf-right-2 {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 100px 350px;
+    transition: opacity 1s, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#flower-head {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 100px 200px;
+    transition: opacity 1.5s, transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ========== SECTION 6: CAKE ========== */
+.cake-stage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-top: 50px;
+}
+
+.cake-visual {
+    position: relative;
+    width: 280px;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+    filter: drop-shadow(0 15px 25px rgba(255, 107, 138, 0.4));
+}
+
+.cake-plate {
+    width: 260px;
+    height: 35px;
+    background: linear-gradient(to bottom, #fff, #d4d4d4);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.8), 0 20px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    border: 1px solid #ddd;
+}
+
+.cake-tier {
+    position: relative;
+    background: linear-gradient(to right, #fce4ec, #fff 30%, #fff 70%, #f48fb1);
+    border-radius: 12px;
+}
+
+/* Main thick frosting */
+.cake-tier::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: linear-gradient(to right, #d50000, #ff1744 30%, #ff1744 70%, #d50000);
+    /* Strawberry/Red Frosting to match flower */
+    border-radius: 12px 12px 10px 10px;
+    box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(255, 23, 68, 0.4);
+    z-index: 2;
+}
+
+/* Beautiful icing drips */
+.cake-tier::after {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: radial-gradient(circle at 12px 0, transparent 0, transparent 11px, #ff1744 12px, #ff1744 14px) repeat-x;
+    background-size: 24px 15px;
+    background-position: 0 0;
+    z-index: 1;
+    opacity: 0.95;
+    filter: drop-shadow(0 3px 2px rgba(255, 23, 68, 0.3));
+}
+
+.tier-bot {
+    width: 230px;
+    height: 95px;
+    z-index: 2;
+    box-shadow: inset -20px 0 30px rgba(0, 0, 0, 0.05), inset 20px 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.tier-mid {
+    width: 180px;
+    height: 80px;
+    z-index: 3;
+    box-shadow: inset -20px 0 30px rgba(0, 0, 0, 0.05), inset 20px 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.tier-top {
+    width: 130px;
+    height: 70px;
+    z-index: 4;
+    box-shadow: inset -20px 0 30px rgba(0, 0, 0, 0.05), inset 20px 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.candles-row {
+    position: absolute;
+    top: 55px;
+    /* Adjusted due to slightly taller top tier */
+    z-index: 5;
+    display: flex;
+    justify-content: space-around;
+    width: 100px;
+}
+
+.candle {
+    width: 8px;
+    height: 38px;
+    background: repeating-linear-gradient(45deg, #fff, #fff 6px, #ff1744 6px, #ff1744 12px);
+    position: relative;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.candle::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 3px;
+    width: 2px;
+    height: 6px;
+    background: #444;
+    /* Wick */
+    border-radius: 1px;
+}
+
+.flame {
+    position: absolute;
+    top: -24px;
+    left: -2px;
+    width: 12px;
+    height: 22px;
+    background: radial-gradient(ellipse at bottom, #fff, #ffeb3b 40%, #ff9800 80%, transparent);
+    border-radius: 50% 50% 20% 20%;
+    box-shadow: 0 0 20px #ffcc00, 0 0 40px #ff9900;
+    animation: flicker 0.8s infinite alternate;
+    transform-origin: bottom center;
+}
+
+.flame.off {
+    display: none;
+}
+
+.cake-hint {
+    margin-top: 40px;
+    font-weight: 600;
+    color: var(--secondary-pink);
+    animation: pulse 2s infinite;
+    font-size: 1.2rem;
+}
+
+.cake-msg {
+    text-align: center;
+    margin-top: 30px;
+    animation: fadeInUp 1s forwards;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== SECTION 8: SCRATCH CARD ========== */
+.scratch-container {
+    position: relative;
+    width: 320px;
+    height: 180px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(255, 107, 138, 0.4);
+    background: #fff;
+    cursor: crosshair;
+}
+
+.scratch-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fff0f5, #ffb6c1);
+    text-align: center;
+    padding: 15px;
+    z-index: 1;
+}
+
+#scratch-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    touch-action: none;
+    /* Crucial for preventing scroll while scratching on mobile */
+}
+
+/* ========== SECTION 9: FINALE ========== */
+.finale-bg {
+    background: transparent;
+}
+
+.finale-content {
+    text-align: center;
+    z-index: 10;
+}
+
+.infinity-symbol {
+    font-size: 5rem;
+    color: var(--primary-pink);
+    opacity: 0.8;
+    margin-bottom: 0px;
+    animation: pulse 3s infinite;
+    filter: drop-shadow(0 0 15px rgba(255, 71, 120, 0.6));
+}
+
+.finale-title {
+    font-size: 3.5rem;
+    margin-bottom: 30px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.typewriter-text {
+    min-height: 100px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    padding: 0 20px;
+    margin-bottom: 40px;
+    color: var(--text-light);
+    /* Changed layout color to perfectly fuse with pink themes */
+    line-height: 1.8;
+}
+
+.finale-hearts span {
+    font-size: 2.2rem;
+    display: inline-block;
+    animation: bounce 2s infinite;
+    filter: drop-shadow(0 5px 10px rgba(255, 182, 193, 0.6));
+}
+
+.finale-hearts span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.finale-hearts span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.finale-hearts span:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+.finale-hearts span:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+.finale-sign {
+    margin-top: 50px;
+    font-family: var(--font-script);
+    font-size: 2.2rem;
+    background: linear-gradient(to right, #ffb6c1, #ff4778);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes pulseHeart {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 71, 120, 0.6));
+    }
+
+    100% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 30px rgba(255, 71, 120, 1));
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100vh) scale(0.5) rotate(90deg);
+        opacity: 0;
+    }
+}
+
+@keyframes floatBalloon {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-30vh) rotate(5deg);
+    }
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.2);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.2);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-15px);
+    }
+
+    60% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes flicker {
+    0% {
+        transform: scaleY(1) rotate(-3deg);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: scaleY(1.1) rotate(3deg);
+        opacity: 1;
+        filter: drop-shadow(0 0 20px #ff9900);
+    }
+
+    100% {
+        transform: scaleY(0.9) rotate(0deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== SURPRISE FEATURE ========== */
+.surprise-btn {
+    bottom: 95px;
+    right: 20px;
+    background: linear-gradient(135deg, #ff4778, #ff8fa3);
+    color: white;
+    animation: floatShake 3s infinite;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 71, 120, 0.6);
+    font-size: 1.8rem;
+    z-index: 999;
+}
+
+@keyframes floatShake {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-5px) rotate(-5deg); }
+    75% { transform: translateY(5px) rotate(5deg); }
+}
+
+#surprise-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#surprise-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#close-surprise {
+    position: absolute;
+    top: 30px; right: 30px;
+    background: none; border: none;
+    color: white; font-size: 2.5rem;
+    cursor: pointer; z-index: 10001;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    transition: transform 0.3s;
+}
+
+#close-surprise:hover { transform: scale(1.2) rotate(90deg); }
+
+.surprise-text {
+    font-family: var(--font-h);
+    font-size: 4rem;
+    color: #fff;
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 0 0 20px rgba(255,71,120,0.8), 0 0 40px rgba(255,71,120,0.6);
+    transform: scale(0.5);
+    opacity: 0;
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1s;
+}
+
+#surprise-overlay.show .surprise-text {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.surprise-name {
+    font-family: var(--font-script);
+    font-size: 5.5rem;
+    background: linear-gradient(135deg, #ffd700, #ff8fa3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: block;
+    margin-top: 15px;
+}
+
+#balloons-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.party-balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 50px; height: 65px;
+    background-color: var(--b-color);
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    box-shadow: inset -10px -10px 15px rgba(0,0,0,0.2);
+    animation: flyUp var(--duration) ease-in forwards;
+}
+
+.party-balloon::before {
+    content: "";
+    position: absolute;
+    bottom: -8px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px;
+    background-color: inherit;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.party-balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -50px; left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: 50px;
+    background: rgba(255,255,255,0.4);
+}
+
+@keyframes flyUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-120vh) rotate(15deg); opacity: 1; }
+}

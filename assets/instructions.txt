@@ -1,0 +1,3 @@
+Please place your background music file here and name it "music.mp3".
+
+Also, place your romantic placeholder images here. You can update the CSS and HTML files to point to their names.
